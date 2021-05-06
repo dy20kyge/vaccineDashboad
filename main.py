@@ -10,7 +10,7 @@ from datetime import datetime
 from datetime import timedelta
 
 factor_exp = 0.2
-main_path = './pictures/'
+main_path = './resources/'
 
 group1 = 8600000#6000000#8600000
 global vaccinated
