@@ -1,7 +1,6 @@
 import matplotlib as mp
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from matplotlib.ticker import MultipleLocator
 import numpy as np
 import requests
 import csv
@@ -11,7 +10,7 @@ from datetime import datetime
 from datetime import timedelta
 
 factor_exp = 0.2
-main_path = 'C:/Users/soeko/PycharmProjects/vaccineProject/'
+main_path = './pictures/'
 
 group1 = 8600000#6000000#8600000
 global vaccinated
