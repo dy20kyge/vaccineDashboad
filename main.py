@@ -8,9 +8,11 @@ import math
 import datetime
 from datetime import datetime
 from datetime import timedelta
+import os
 
 factor_exp = 0.2
-main_path = './resources/'
+cwd = os.getcwd()
+main_path = cwd + '\\..\\..\\resources\\'
 
 group1 = 8600000#6000000#8600000
 global vaccinated
