@@ -296,6 +296,7 @@ def draw_diagram_line_days_to_finish_last_month_dates():
     global newDoses, dateVal
     months = mdates.MonthLocator()
     days = mdates.DayLocator()
+    daysY = mdates.DayLocator()
     weeks = mdates.WeekdayLocator()
     from matplotlib.pyplot import figure
     mp.rc('font', **font_date_axis)
@@ -338,7 +339,7 @@ def draw_diagram_line_days_to_finish_last_month_dates():
     ax.grid(True, which='minor', color='lightgrey')
     plt.savefig(main_path + 'daysToEndBest_alt.png', bbox_inches='tight')
     ax.yaxis.set_major_locator(weeks)
-    ax.yaxis.set_minor_locator(days)
+    ax.yaxis.set_minor_locator(daysY)
     plt.savefig(main_path + 'daysToEndBest_alt_days.png', bbox_inches='tight')
     #plt.show()
 
