@@ -19,9 +19,11 @@ global vaccinated
 global full_vaccinated
 global newDoses
 global dateVal
+global totalDoses
 group2 = 13300000#16000000#12400000
 group3 = 15400000#12000000#16300000
 group4 = 17000000#46000000
+neededDoses = 110000000
 
 global impfbereitschaft, impfbereitschaft_g1, impfbereitschaft_g2
 impfbereitschaft_g1 = 0.9
@@ -38,6 +40,8 @@ def lastRow(row):
     vaccinated = int(row[8])
     global full_vaccinated
     full_vaccinated = int(row[9])
+    global totalDoses
+    totalDoses = int(row[2])
 
 def download_impfdashboard_de():
     url = 'https://impfdashboard.de/static/data/germany_vaccinations_timeseries_v2.tsv'
@@ -238,7 +242,7 @@ def draw_diagram_line_days_to_finish():
         sevenDayAvg[tag] = newDoses[i]
         totalDoses = totalDoses + newDoses[i]
         tag = (tag + 1) % 7
-        values.append((100000000 - totalDoses)/(sum(sevenDayAvg)/7))
+        values.append((neededDoses - totalDoses)/(sum(sevenDayAvg)/7))
         if j < 6:
             dates.pop(0)
             values.pop(0)
@@ -256,7 +260,7 @@ def draw_diagram_line_days_to_finish():
     plt.savefig(main_path + 'daysToEnd.png', bbox_inches='tight')
 
 def draw_diagram_line_days_to_finish_last_month():
-    global newDoses, dateVal
+    global newDoses, dateVal, totalDoses
     months = mdates.MonthLocator()
     days = mdates.DayLocator()
     from matplotlib.pyplot import figure
@@ -268,15 +272,15 @@ def draw_diagram_line_days_to_finish_last_month():
     values = []
     sevenDayAvg = [0, 0, 0, 0, 0, 0, 0]
     tag = 0
-    totalDoses = 0
+    #totalDoses = 0
     j = 0
 
     for i in range(len(newDoses) - 37, len(newDoses)):
         dates.append(datetime.strptime(dateVal[i], '%Y-%m-%d').strftime("%d.%m"))
         sevenDayAvg[tag] = newDoses[i]
-        totalDoses = totalDoses + newDoses[i]
+        #totalDoses = totalDoses + newDoses[i]
         tag = (tag + 1) % 7
-        values.append((100000000 - totalDoses) / (sum(sevenDayAvg) / 7))
+        values.append((neededDoses - totalDoses) / (sum(sevenDayAvg) / 7))
         if j < 6:
             dates.pop(0)
             values.pop(0)
@@ -308,7 +312,7 @@ def draw_diagram_line_days_to_finish_last_month_dates():
     todayValues = []
     sevenDayAvg = [0, 0, 0, 0, 0, 0, 0]
     tag = 0
-    totalDoses = 0
+    totalDoses = sum(newDoses[0:len(newDoses)-37])
     j = 0
 
     for i in range(len(newDoses) - 37, len(newDoses)):
@@ -316,7 +320,7 @@ def draw_diagram_line_days_to_finish_last_month_dates():
         sevenDayAvg[tag] = newDoses[i]
         totalDoses = totalDoses + newDoses[i]
         tag = (tag + 1) % 7
-        tmp = (100000000 - totalDoses) / (sum(sevenDayAvg) / 7)
+        tmp = (neededDoses - totalDoses) / (sum(sevenDayAvg) / 7)
         tmp2 = datetime.strptime(dateVal[i], '%Y-%m-%d') + timedelta(days=tmp)
         values.append(tmp2)
         todayValues.append(datetime.strptime(dateVal[i], '%Y-%m-%d'))
